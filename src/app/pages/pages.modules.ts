@@ -9,6 +9,12 @@ import { FormsModule } from "@angular/forms";
 import { IncrementadorComponent } from "../components/incrementador/incrementador.component";
 import {ChartsModule} from 'ng2-charts'
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { RxjsComponent } from './rxjs/rxjs.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
+
+
 
 
 @NgModule({
@@ -18,20 +24,25 @@ import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.co
         Graficas1Component,
         PagesComponent,
         IncrementadorComponent,
-        GraficoDonaComponent
+        GraficoDonaComponent,
+        RxjsComponent,
+        ProfileComponent
 
     ],
     exports:[
         DashboardComponent,
         ProgressComponent,
         Graficas1Component, 
-        PagesComponent
+        PagesComponent,
+        PipesModule
     ],
     imports:[
         SharedModule,
         PAGES_ROUTES,
         FormsModule,
-        ChartsModule
+        ChartsModule,
+        PipesModule,
+        CommonModule
     ]
   })
   export class PagesModule { }
