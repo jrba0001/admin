@@ -1,4 +1,5 @@
-export { SubirArchivoService } from './subirArchivo/subir-archivo.service';
+export  { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+export { SubirArchivoService } from './subirArchivo/subirArchivo.service';
 export { LoginGuardGuard } from './guards/login-guard.guard';
 export { UsuarioService } from './usuario/usuario.service';
 

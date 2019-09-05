@@ -6,7 +6,7 @@ import { URL_SERVICIOS } from '../../config/config';
 import {map} from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
+import { SubirArchivoService } from '../subirArchivo/subirArchivo.service';
 
 
 @Injectable({
@@ -97,16 +97,20 @@ export class UsuarioService {
 
    }
    actualizarUsuario(usuario:Usuario){
-     let url = URL_SERVICIOS + '/usuario/'+this.id;
+     let url = URL_SERVICIOS + '/usuario/'+usuario._id;
      url+="?token="+this.token
      return this.http.put(url,usuario)
      .pipe (map((resp:any)=>{
-      let usuarioDB:Usuario = resp.usuario;
-      this.usuario = usuarioDB;
+       if (usuario._id === this.usuario._id){
+        let usuarioDB:Usuario = resp.usuario;
+        this.usuario = usuarioDB;
+        this.id = usuarioDB._id;
+        this.guardarStorage(usuarioDB._id, this.token, usuarioDB)
+       }
+     
       //this.token =  this.token; //es el mismo token
-      this.id = usuarioDB._id;
-      this.guardarStorage(usuarioDB._id, this.token, usuarioDB)
-      swal.fire('Usuario actualizado',usuarioDB.email+" "+usuarioDB.nombre,'success')
+      
+      swal.fire('Usuario actualizado','todo correcto','success')
      }))
      
    }
@@ -120,10 +124,22 @@ export class UsuarioService {
      })
      .catch(resp=>{
        console.log(resp)
-     });
+     });   
+  }
+  cargarUsuarios(desde:number = 0){
+    let url = URL_SERVICIOS+'/usuario?desde='+desde;
+    return this.http.get(url);
 
+  }
+  buscarUsuarios(termino:string){
+    let url = URL_SERVICIOS+'/busqueda/coleccion/usuarios/'+termino;
+    return this.http.get(url).pipe(map((resp:any)=>resp.usuarios));
 
-       
+  }
+  borrarUsuario(id:string){
+    let url = URL_SERVICIOS+'/usuario/'+id
+    url+='?token='+this.token
+    return this.http.delete(url)
   }
 
 }

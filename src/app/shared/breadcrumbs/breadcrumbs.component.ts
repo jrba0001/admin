@@ -32,9 +32,6 @@ export class BreadcrumbsComponent implements OnInit {
     .pipe(filter ((event:ActivationEnd)=> event instanceof ActivationEnd ),
           filter((event:ActivationEnd)=>event.snapshot.firstChild === null),
           map((event:ActivationEnd)=>event.snapshot.data))
-   
-    
-
   }
 
   ngOnInit() {
